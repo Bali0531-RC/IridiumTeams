@@ -86,8 +86,8 @@ tasks {
     }
 
     compileJava {
-        sourceCompatibility = JavaVersion.VERSION_1_17.toString()
-        targetCompatibility = JavaVersion.VERSION_1_17.toString()
+        sourceCompatibility = JavaVersion.VERSION_17.toString()
+        targetCompatibility = JavaVersion.VERSION_17.toString()
     }
 
     compileTestJava {
