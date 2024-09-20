@@ -86,8 +86,8 @@ tasks {
     }
 
     compileJava {
-        sourceCompatibility = JavaVersion.VERSION_17.toString()
-        targetCompatibility = JavaVersion.VERSION_17.toString()
+        sourceCompatibility = JavaVersion.VERSION_1_8.toString()
+        targetCompatibility = JavaVersion.VERSION_1_8.toString()
     }
 
     compileTestJava {
@@ -104,8 +104,4 @@ publishing {
         version = version
         artifact(tasks["shadowJar"])
     }
-}
-tasks.withType(JavaCompile) {
-    sourceCompatibility = 17
-    targetCompatibility = 17
 }
