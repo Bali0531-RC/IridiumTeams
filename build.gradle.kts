@@ -4,7 +4,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
-group = "com.iridium"
+group = "com.github.Bali0531-RC"
 version = "2.5.8"
 description = "IridiumTeams"
 
@@ -99,7 +99,7 @@ tasks {
 // Maven publishing
 publishing {
     publications.create<MavenPublication>("maven") {
-        groupId = "com.iridium"
+        groupId = "com.github.Bali0531-RC"
         artifactId = "IridiumTeams"
         version = version
         artifact(tasks["shadowJar"])
