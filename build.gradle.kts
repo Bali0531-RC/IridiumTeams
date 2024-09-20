@@ -25,13 +25,11 @@ repositories {
 }
 
 dependencies {
-    // Dependencies that we want to shade in
     implementation("org.jetbrains:annotations:24.1.0")
     implementation("com.j256.ormlite:ormlite-core:6.1")
     implementation("com.j256.ormlite:ormlite-jdbc:6.1")
     implementation("com.iridium:IridiumCore:2.0.6")
 
-    // Other dependencies that are not required or already available at runtime
     compileOnly("org.projectlombok:lombok:1.18.34")
     compileOnly("org.spigotmc:spigot-api:1.21.1-R0.1-SNAPSHOT")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7")
@@ -44,10 +42,8 @@ dependencies {
     implementation("de.jeff_media:SpigotUpdateChecker:1.3.2")
     implementation("org.bstats:bstats-bukkit:3.0.3")
 
-    // Enable lombok annotation processing
     annotationProcessor("org.projectlombok:lombok:1.18.34")
 
-    // Test dependencies
     testImplementation(platform("org.junit:junit-bom:5.11.0"))
     testImplementation("org.junit.jupiter:junit-jupiter:5.11.0")
     testImplementation("com.github.seeseemelk:MockBukkit-v1.18:2.85.2")
@@ -55,37 +51,16 @@ dependencies {
 }
 
 tasks {
-    // Add the shadowJar task to the build task
     build {
         dependsOn(shadowJar)
     }
 
     shadowJar {
-        // Remove the archive classifier suffix
         archiveClassifier.set("")
     }
 
-    // Set UTF-8 as the encoding
     compileJava {
         options.encoding = "UTF-8"
-    }
-
-    // Process Placeholders for the plugin.yml
-    processResources {
-        filesMatching("**/plugin.yml") {
-            expand(rootProject.project.properties)
-        }
-
-        // Always re-run this task
-        outputs.upToDateWhen { false }
-    }
-
-    test {
-        // TODO: fix unit tests & re-enable this
-        // useJUnitPlatform()
-    }
-
-    compileJava {
         sourceCompatibility = JavaVersion.VERSION_1_8.toString()
         targetCompatibility = JavaVersion.VERSION_1_8.toString()
     }
@@ -94,9 +69,20 @@ tasks {
         sourceCompatibility = JavaVersion.VERSION_17.toString()
         targetCompatibility = JavaVersion.VERSION_17.toString()
     }
+
+    processResources {
+        filesMatching("**/plugin.yml") {
+            expand(rootProject.project.properties)
+        }
+        outputs.upToDateWhen { false }
+    }
+
+    test {
+        // TODO: fix unit tests & re-enable this
+        // useJUnitPlatform()
+    }
 }
 
-// Maven publishing
 publishing {
     publications.create<MavenPublication>("maven") {
         groupId = "com.github.Bali0531-RC"
@@ -104,4 +90,7 @@ publishing {
         version = version
         artifact(tasks["shadowJar"])
     }
+
+    // Ensure the publish task depends on jar
+    tasks["publishMavenPublicationToMavenLocal"].dependsOn(tasks["jar"])
 }
